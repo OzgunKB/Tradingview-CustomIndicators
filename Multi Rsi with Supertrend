@@ -1,5 +1,5 @@
 //@version=5
-indicator("Supertrend", overlay=true, timeframe="", timeframe_gaps=true)
+indicator("Multi RSI & Supertrend", overlay=true, timeframe="", timeframe_gaps=true)
 
 // === RSI 14 === {
 rsiLengthInput14 = input.int(14, minval=1, title="RSI Length", group="RSI Settings", group="RSI14")
