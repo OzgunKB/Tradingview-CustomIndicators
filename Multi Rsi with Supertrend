@@ -116,6 +116,10 @@ fill(bodyMiddle, downTrend, color.new(color.red, 90), fillgaps=false)
 long1= uptrendst[1] and downtrendst and reading2>0 and reading3>0
 plotshape(long1, title='Long', text='🐂 Long', location=location.belowbar, style=shape.labelup, size=size.tiny, color=color.new(color.lime, 70), textcolor=color.new(color.black, 0), offset=0)
 
+short1= uptrendst and downtrendst[1] and reading2<0 and reading3<0
+plotshape(short1, title='Short', text='🐼 Short', location=location.abovebar, style=shape.labeldown, size=size.tiny, color=color.new(color.red, 70), textcolor=color.new(color.black, 0), offset=0)
+
 //-------------------- Alerting
 alertcondition(long1 , 'Buy', 'Go long!')
+alertcondition(short1 , 'Sell', 'Go short!')
 // }
