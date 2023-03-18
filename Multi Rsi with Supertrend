@@ -2,15 +2,12 @@
 indicator("Supertrend", overlay=true, timeframe="", timeframe_gaps=true)
 
 // === RSI 14 === {
-rsiLengthInput14 = input.int(14, minval=1, title="RSI Length", group="RSI Settings")
-rsiSourceInput14 = input.source(close, "Source", group="RSI Settings")
-maTypeInput14 = input.string("SMA", title="MA Type", options=["SMA", "Bollinger Bands", "EMA", "SMMA (RMA)", "WMA", "VWMA"], group="MA Settings")
-maLengthInput14 = input.int(14, title="MA Length", group="MA Settings")
+rsiLengthInput14 = input.int(14, minval=1, title="RSI Length", group="RSI Settings", group="RSI14")
+rsiSourceInput14 = input.source(close, "Source", group="RSI Settings", group="RSI14")
 
 up14 = ta.rma(math.max(ta.change(rsiSourceInput14), 0), rsiLengthInput14)
 down14 = ta.rma(-math.min(ta.change(rsiSourceInput14), 0), rsiLengthInput14)
 rsi14 = down14 == 0 ? 100 : up14 == 0 ? 0 : 100 - (100 / (1 + up14 / down14))
-isBB14 = maTypeInput14 == "Bollinger Bands"
 
 // plot(rsi14, "RSI", color=#6acdf5)
 // rsiUpperBand14 = hline(70, "RSI Upper Band", color=#787B86)
@@ -41,7 +38,7 @@ if reading2
     else
         plotColor2 := color.gray
 
-bgcolor( reading2 > 0 ? color.new(color.lime, 70) : na,  title="Last RSI 14")
+bgcolor( reading2 > 0 ? color.new(color.green, 70) : na,  title="Last RSI 14")
 // readingPlot = plot(reading2, title="Last Pass", color=plotColor2, style=plot.style_area, linewidth=3)
 // }
 
@@ -55,17 +52,12 @@ ma(source28, length28, type28) =>
         "WMA" => ta.wma(source28, length28)
         "VWMA" => ta.vwma(source28, length28)
 
-rsiLengthInput28 = input.int(28, minval=1, title="RSI Length", group="RSI Settings")
-rsiSourceInput28 = input.source(close, "Source", group="RSI Settings")
-maTypeInput28 = input.string("SMA", title="MA Type", options=["SMA", "Bollinger Bands", "EMA", "SMMA (RMA)", "WMA", "VWMA"], group="MA Settings")
-maLengthInput28 = input.int(28, title="MA Length", group="MA Settings")
-bbMultInput28 = input.float(2.0, minval=0.001, maxval=50, title="BB StdDev", group="MA Settings")
+rsiLengthInput28 = input.int(28, minval=1, title="RSI Length", group="RSI28")
+rsiSourceInput28 = input.source(close, "Source", group="RSI28")
 
 up28 = ta.rma(math.max(ta.change(rsiSourceInput28), 0), rsiLengthInput28)
 down28 = ta.rma(-math.min(ta.change(rsiSourceInput28), 0), rsiLengthInput28)
 rsi28 = down28 == 0 ? 100 : up28 == 0 ? 0 : 100 - (100 / (1 + up28 / down28))
-rsiMA28 = ma(rsi28, maLengthInput28, maTypeInput28)
-isBB28 = maTypeInput28 == "Bollinger Bands"
 
 // plot(rsi28, "RSI", color=#7E57C2)
 // plot(rsiMA28, "RSI-based MA", color=color.yellow)
@@ -101,13 +93,13 @@ if reading3
     else
         plotColor3 := color.gray
 
-bgcolor( reading3 > 0 ? color.new(#28724e, 70) : na,  title="Last RSI 28")
+bgcolor( reading3 > 0 ? color.new(color.lime, 70) : na,  title="Last RSI 28")
 // readingPlot = plot(reading3, title="Last Pass", color=plotColor3, style=plot.style_area, linewidth=3)
 // }
 
 // === ST === {
-atrPeriod = input(10, "ATR Length")
-factor = input.float(3.0, "Factor", step = 0.01)
+atrPeriod = input(10, "ATR Length", group="Supertrend")
+factor = input.float(3.0, "Factor", step = 0.01, group="Supertrend")
 
 [supertrend, direction] = ta.supertrend(factor, atrPeriod)
 
